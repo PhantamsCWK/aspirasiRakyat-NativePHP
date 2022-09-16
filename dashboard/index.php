@@ -47,7 +47,7 @@ require_once '../templates/header.php';
             <small><?= $a['created_at'] ?></small>
           </div>
           <div class="d-<?= isset($a['image']) ? 'flex' : 'none'?>">
-            <img class="img-fluid rounded" style="width: 15%; height:auto" src="../resource/img/<?=$a['image']?>" alt="">
+            <img class="img-fluid rounded" style="width: 15%; max-height:80px" src="../resource/img/<?=$a['image']?>" alt="">
           </div>
           <div class="d-flex w-100 justify-content-between">
             <p class="mb-1"><?= strlen($a['message']) < 80 ? $a['message'] : substr($a['message'],0,80).'...' ?></p>
