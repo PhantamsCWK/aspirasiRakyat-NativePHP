@@ -52,9 +52,9 @@ require_once '../templates/header.php';
           <div class="d-flex w-100 justify-content-between">
             <p class="mb-1"><?= strlen($a['message']) < 80 ? $a['message'] : substr($a['message'],0,80).'...' ?></p>
             <div class="d-flex flex-row-reverse gap-2">
-              <a href="http://localhost/senntra-Bend1/logic/destroy.php?id=<?= $a['id']?>" class="badge bg-danger text-decoration-none"><span data-feather="trash-2"></span></a>
-              <a href="http://localhost/senntra-Bend1/dashboard/?id=<?= $a['id']?>" class="badge bg-primary text-decoration-none"><span data-feather="eye"></span></a>
-              <a href="http://localhost/senntra-Bend1/logic/acceptStatus.php?id=<?= $a['id']?>" class="badge bg-success text-decoration-none <?= $a['status'] ? 'd-none' : ''?>"><span data-feather="check"></span></a>
+              <a style="max-height: 24px;" href="http://localhost/senntra-Bend1/logic/destroy.php?id=<?= $a['id']?>" class="badge bg-danger text-decoration-none"><span data-feather="trash-2"></span></a>
+              <a style="max-height: 24px;" href="http://localhost/senntra-Bend1/dashboard/?id=<?= $a['id']?>" class="badge bg-primary text-decoration-none"><span data-feather="eye"></span></a>
+              <a style="max-height: 24px;" href="http://localhost/senntra-Bend1/logic/acceptStatus.php?id=<?= $a['id']?>" class="badge bg-success text-decoration-none <?= $a['status'] ? 'd-none' : ''?>"><span data-feather="check"></span></a>
             </div>
           </div>
       </div>

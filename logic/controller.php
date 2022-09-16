@@ -1,6 +1,7 @@
 <?php
 ob_start();
 session_start();
+date_default_timezone_set("Asia/Jakarta");
 
 $conn = mysqli_connect('localhost','root','','aspirasirakyat');
 
@@ -18,8 +19,6 @@ function query($query) {
 
 function send($data) {
     global $conn;
-
-    date_default_timezone_set("Asia/Jakarta");
 
     $name = $data['name'];
     $address = $data['address'];
@@ -79,6 +78,28 @@ function sendFile() {
       return $nameFileNew;
 }
 
+function sendFeedback($data){
+    global $conn;
+
+    $feedback =  $data['feedback'];
+    $isAdmin = isset($_SESSION['isAdmin']) ? 1 : 0;
+    $aspirasiId = $data['aspirasi_id'];
+    $time = date("Y-m-d H:i:s");
+    mysqli_query($conn, "INSERT INTO feedback (aspirasi_id,feedback,isAdmin,created_at,updated_at)
+                            VALUES ($aspirasiId,'$feedback',$isAdmin,'$time','$time')");
+
+    $feedbackId = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM feedback WHERE feedback = '$feedback' AND created_at = '$time'"));
+    if(mysqli_affected_rows($conn) > 0) {
+        if (routeName() == 'index.php') {
+            return header("location: http://localhost/senntra-Bend1/dashboard/?id=$aspirasiId#{$feedbackId['id']}");
+        }elseif (routeName() == 'aspirasis.php') {
+            return header("location: http://localhost/senntra-Bend1/aspirasis.php?id=$aspirasiId#{$feedbackId['id']}");
+        }
+
+    }
+    return "salah";
+}
+
 function isAdmin($data){
     global $conn;
 
@@ -110,7 +131,8 @@ function routeName() {
 
 function makeEpoch($data) {
     $result = explode(' ',$data);
-    $result = explode('-',$result[0]);
-    $result = mktime(0,0,0,$result[1],$result[2],$result[0]);
+    $date = explode('-',$result[0]);
+    $time = explode(':',$result[1]);
+    $result = mktime($time[0],$time[1],$time[2],$date[1],$date[2],$date[0]);
     return $result;
 }
