@@ -20,5 +20,17 @@
         </a>
       </li>
     </ul>
+    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Settings</span>
+          <span data-feather="settings"></span>
+    </h6>
+    <ul class="nav flex-column">
+      <li>
+        <a class="nav-link <?= routeName() === 'history.php' ? 'active' : ''?>" href="history.php">
+          <span data-feather="activity"></span>
+          History
+        </a>
+      </li>
+    </ul>
   </div>
 </nav>

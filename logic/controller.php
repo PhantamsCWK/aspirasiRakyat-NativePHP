@@ -115,12 +115,52 @@ function isAdmin($data){
     }
 
     if($admin['username'] === $name AND $admin['password'] === $password) {
-        $_SESSION['isAdmin'] = 'qwertyu';
+        $_SESSION['isAdmin'] = $admin['username'];
+        return addLog("Admin : \'{$admin['username']}\' telah login", $admin['username']);
 
-        return true;
     }
 
     return false;
+}
+
+function addLog($message,$name) {
+    global $conn;
+    $id = query("SELECT id FROM admins WHERE username = '$name'");
+
+    mysqli_query($conn, "INSERT INTO log_admins (admin_id, message, created_at) VALUES ({$id[0]['id']}, '$message', NOW())");
+    
+    return mysqli_affected_rows($conn) > 0 ? true : false;
+}
+
+function searchingAspirasi($data) {
+    global $conn;
+    
+    if(!empty($data['month']) AND !empty($data['category'])){
+        return mysqli_query($conn,"SELECT a.id, a.message, a.status, c.name, a.created_at, a.image 
+                                    FROM aspirasis AS a JOIN categories AS c ON (c.id = category_id) 
+                                    WHERE c.name = '{$data['category']}' 
+                                    AND MONTH(a.created_at) = '{$data['month']}'
+                                    AND a.status LIKE '%{$data['status']}%' 
+                                    ORDER BY created_at DESC");
+    }
+        
+    if(empty($data['month'])){
+        return mysqli_query($conn,"SELECT a.id, a.message, a.status, c.name, a.created_at, a.image
+                                            FROM aspirasis AS a JOIN categories AS c ON (c.id = category_id) 
+                                            WHERE c.name = '{$data['category']}'
+                                            AND a.status LIKE '%{$data['status']}%' 
+                                            ORDER BY created_at DESC");
+    }
+
+    if(empty($data['category'])){
+        return mysqli_query($conn,"SELECT a.id, a.message, a.status, c.name, a.created_at, a.image
+                                            FROM aspirasis AS a JOIN categories AS c ON (c.id = category_id) 
+                                            WHERE MONTH(a.created_at) = '{$data['month']}'
+                                            AND a.status LIKE '%{$data['status']}%' 
+                                            ORDER BY created_at DESC");
+    }
+
+   
 }
 
 function routeName() {

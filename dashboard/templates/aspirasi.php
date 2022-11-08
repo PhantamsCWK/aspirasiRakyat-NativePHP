@@ -79,7 +79,8 @@ require_once '../templates/header.php';
           </div>
         </div>
       </div>
-      <div class="container d-flex justify-content-center" id="feedback-box">
+      <div class="container-fluid my-5" id="feedback-box">
+      <div class="container d-flex justify-content-center">
         <div class="col-md-8 col-lg-9 col-xl-10">
           <ul class="list-unstyled <?=$a['status'] ? '' : 'd-none'?>">
 <?php 
@@ -135,6 +136,7 @@ require_once '../templates/header.php';
             <a id="print" onclick="printPage()" class="btn btn-primary mt-4">Print</a>
           </div>
         </div>
+      </div>
     </main>
   </div>
 </div>
